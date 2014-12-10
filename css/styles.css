@@ -115,15 +115,6 @@ form {
                 margin:50px auto;
 }
 
-input:focus{
-    color:#808080;    
-}
-
-input{
-    color:#808080;    
-}
-
-
 .search {
                 height: 27px;
                 margin-right: 10px;

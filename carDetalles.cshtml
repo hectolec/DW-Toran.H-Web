@@ -1,0 +1,41 @@
+﻿@{
+    Layout = "~/Shared/Layouts/_Layout.cshtml";
+
+    var idCar = !UrlData[0].IsEmpty() ? UrlData[0] : "0";
+    var db = Database.Open("CotxesPersona2015");
+    var sqlselect = "SELECT * FROM cars where id= @0";
+    
+
+    var car = db.QuerySingle(sqlselect, idCar);
+    
+    var sql2 = "SELECT * FROM personas WHERE personas.id IN (SELECT personas_cars.idPersona FROM personas_cars WHERE personas_cars.idCar = @0)";
+    //var sql = "SELECT * FROM PERSONAS INNER JOIN personas_cars ON personas.id = personas_cars.idPersona WHERE personas_cars.idCar = @0";
+    var personas =  db.Query(sql2,idCar);  
+}
+
+@if(car==null){
+    <p>
+        No ha sido posible recuperar los detalles de este coche
+    </p>
+} else {
+    Page.title = car.matricula;
+    <h1 class='titulSeccio'>Dades de: @car.matricula</h1>
+    <table>
+        <tr class='capTaula'>
+            <th>Matricula</th><th>Modelo</th><th>Color</th>
+        </tr>
+        <tr>
+            <td>@car.matricula</td><td>@car.modelo</td><td>@car.color</td>
+        </tr>
+    </table>
+    <h1 class='titulSeccio'>Coche asignado a</h1>
+    <ul>
+        @foreach(var p in personas){
+            <li>
+                <p>
+                    <a class="llistaPersones"href="~/personaDetalles/@p.id">@p.nom | @p.dni</a> 
+                </p>
+            </li>
+        }
+    </ul>
+}

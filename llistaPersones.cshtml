@@ -9,7 +9,7 @@
     var personas = db.Query(sqlselect);
 }
 
-
+<h1 class='titulSeccio'>Llista Persones</h1>
 @if(personas.Count() == 0){
     <p>
         No se han encontrado ha nadie con estos datos
@@ -18,9 +18,9 @@
     <ul>
         @foreach(var p in personas){
             <li>
-                <h3>
+                <p>
                     <a class="llistaPersones"href="~/personaDetalles/@p.id">@p.nom | @p.dni</a> 
-                </h3>
+                </p>
             </li>
         }
     </ul>  

@@ -1,0 +1,29 @@
+﻿@{
+    Layout = "~/Shared/Layouts/_Layout.cshtml";
+
+    Page.title = "Llista Cotxes";
+
+    var db = Database.Open("CotxesPersona2015");
+    var sqlselect = "SELECT * FROM cars";
+
+    var cars = db.Query(sqlselect);
+}
+
+<h1 class='titulSeccio'>Llista Cotxes</h1>
+@if(cars.Count() == 0){
+    <p>
+        No se han encontrado ningun coche con estos datos
+    </p>
+} else {
+    <ul>
+        @foreach(var c in cars){
+            <li>
+                <p>
+                    <a class="llistaPersones"href="~/carDetalles/@c.id">@c.matricula</a> 
+                </p>
+            </li>
+        }
+    </ul>  
+}
+
+
