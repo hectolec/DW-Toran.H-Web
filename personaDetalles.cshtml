@@ -1,0 +1,62 @@
+﻿@{
+    Layout = "~/Shared/Layouts/_Layout.cshtml";
+
+    var personaId = !UrlData[0].IsEmpty() ? UrlData[0] : "0";
+    var db = Database.Open("CotxesPersona2015");
+    var sqlselect = "SELECT * FROM personas where id= @0";
+    var idCar=0;
+
+    var persona = db.QuerySingle(sqlselect, personaId);    
+
+    //SELECT * FROM cars WHERE cars.id NOT IN (SELECT idMatricula FROM `cotxespersona` WHERE idPersona= 'id')
+    var sqlselect2 = "SELECT * FROM cars WHERE cars.id NOT IN (SELECT idCar FROM personas_cars WHERE idPersona= @0)";
+    var cotxes = db.Query(sqlselect2, personaId);
+
+    var result = "";
+    if(IsPost){
+      var sql = "";
+      idCar = Request["selectIdCar"].AsInt();
+      var idPersona = personaId.AsInt();
+      //Validacion
+      if(idCar>0){
+          sql = "INSERT INTO personas_cars (idCar,idPersona) VALUES (@0,@1)";
+          db.Execute(sql,idCar,idPersona);
+          result = "Correcte"; 
+      } else {
+          result = "Cotxe Incorrecte";
+      }
+    }else{
+        result = "This was the first request for this page.";
+    }
+}
+
+@if(persona==null){
+    <p>
+        No ha sido posible recuperar los detalles del producto
+    </p>
+} else {
+    Page.title = persona.nom;
+    <h1 class='titulSeccio'>Dades de: @persona.nom</h1>
+    <table>
+        <tr class='capTaula'>
+            <th>Nom Complet</th><th>DNI</th><th>Telefon</th><th>Carrer</th><th>Població</th><th></th>
+        </tr>
+        <tr>
+            <td>@persona.nom</td><td>@persona.dni</td><td>@persona.telefon</td><td>@persona.carrer</td><td>@persona.poblacio</td><td><img class="fotoUsuari" src="~/img/@persona.img" alt="@persona.nom" title="@persona.nom"></td>
+        </tr>
+    </table>
+    <h1 class='titulSeccio'>Asignar Cotxe a: @persona.nom</h1>
+    <form method="post">
+        Matricula a asignar: <select name="selectIdCar">
+            <option value="0">----</option>
+            @foreach(var c in cotxes){
+                <option value="@c.id">@c.matricula</option>
+            }
+        </select>
+        <input type="submit" value="Asignar">
+    </form>
+    if(IsPost){
+        <p>@result</p>    
+    }
+    
+}

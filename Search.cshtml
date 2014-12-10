@@ -1,0 +1,33 @@
+﻿@{
+  Layout = "~/Shared/Layouts/_Layout.cshtml";
+  Page.Title = "Busqueda";
+
+  var db = Database.Open("CotxesPersona2015");
+
+  var searchWords = Request["searchTerm"].Split(' ');
+
+  IEnumerable<dynamic> result = Enumerable.Empty<string>();
+
+  var sqlSelect = "SELECT id, nom FROM personas WHERE " + 
+                  "nom LIKE @0 OR poblacio LIKE @0";
+
+  foreach(var word in searchWords){
+    result =  result.Concat(db.Query(sqlSelect, "%" + word + "%").ToList());
+  }
+
+
+}
+
+<h1 class='titulSeccio'>
+    Resultados de la busqueda
+</h1>
+<p>
+    @result.Count() articulos encontrados que coinciden con: <em>@Request["searchTerm"]</em>
+</p>
+<ul id="searchResult">
+    @foreach(var item in result){
+        <li>
+            <a class="llistaPersones" href="~/personaDetalles/@item.id">@item.nom</a>
+        </li>
+    }    
+</ul>

@@ -1,0 +1,29 @@
+﻿@{
+    Layout = "~/Shared/Layouts/_Layout.cshtml";
+
+    Page.title = "Llista Persones";
+
+    var db = Database.Open("CotxesPersona2015");
+    var sqlselect = "SELECT * FROM personas";
+
+    var personas = db.Query(sqlselect);
+}
+
+
+@if(personas.Count() == 0){
+    <p>
+        No se han encontrado ha nadie con estos datos
+    </p>
+} else {
+    <ul>
+        @foreach(var p in personas){
+            <li>
+                <h3>
+                    <a class="llistaPersones"href="~/personaDetalles/@p.id">@p.nom | @p.dni</a> 
+                </h3>
+            </li>
+        }
+    </ul>  
+}
+
+

@@ -1,0 +1,171 @@
+
+/*tipografia*/
+html,body	{
+    background-color: white;
+    font-family:  "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+    font-size: 20px;
+    margin: 0;
+    padding: 0;
+}
+		
+/*contenedor de pagina*/
+#cont	{
+    width: 100%;
+    height: 100%;
+    background-color: white;
+}
+
+			
+/*cos*/
+#cos	{
+    
+    width: auto;
+    height: 100%;
+    
+}
+
+#contingut{
+    margin-left: 3%;
+    margin-top: 5%;
+    height: auto;
+    width: 75%;
+    float: left;
+}
+			
+/*menu*/
+#menu	{
+    padding-left: 1%;
+    margin-top: 7.7%;
+    float: right;
+    width: 20%;
+    height: 100%;
+    border-left: 2px solid #195075;
+}
+		
+
+.opMenu{
+    padding-top: 10%;
+    padding-left: 25%;
+    color:  #195075;
+    text-decoration: none;
+}
+
+.opMenu:hover{
+    color:  #195075;
+    text-decoration: underline orange;
+}
+
+a{
+    color: black;
+    text-decoration: none;
+}
+
+a:hover{
+    color:white;
+}
+
+a.llistaPersones:hover{
+    color:  #195075;
+    text-decoration: underline orange;
+}
+a.llistaPersones{
+    color:  black;
+}
+
+table{
+    border-spacing: 0px;  
+    color: #195075;
+}
+
+.taula{
+    height: 40%;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+td{
+    padding: 8px 25px;
+    border-bottom: 1px solid #195075;
+    
+}
+
+th{
+    padding: 10px;
+    border-bottom: 2px solid #195075;
+}
+
+
+tr:hover{
+    background-color:  #195075;
+    color: white;
+}
+
+tr:hover a{
+    color:white; 
+    text-decoration: underline orange;
+}
+
+.capTaula{
+   pointer-events: none; 
+}
+
+
+form {
+                width:100%;
+                margin:50px auto;
+}
+
+input:focus{
+    color:#808080;    
+}
+
+input{
+    color:#808080;    
+}
+
+
+.search {
+                height: 27px;
+                margin-right: 10px;
+                padding: 0px;
+                width: 55%;
+                background:rgba(50, 50, 50, 0.2);
+                border:0px solid #dbdbdb;
+}
+.button {
+                position:relative;
+                padding:6px 15px;
+                left:-8px;
+                border:2px solid #195075;
+                background-color:#207cca;
+                color:#fafafa;
+}
+.button:hover  {
+                background-color:#fafafa;
+                color:#207cca;
+}
+
+span.error{
+    color: #195075;
+    border: 1px solid red;
+}
+
+h1.titulSeccio{
+    color: #195075;
+    border-bottom: 2px solid #195075;
+    font-size: 20px;
+}
+
+img.fotoUsuari{
+    margin-right: 5px;
+    height: 20%;    
+    width: auto;
+    border:2px solid #fff; 
+    -moz-box-shadow: 0px 6px 5px #ccc;
+    -webkit-box-shadow: 0px 6px 5px #ccc; 
+    box-shadow: 0px 6px 5px #ccc; 
+    -moz-border-radius:190px; 
+    -webkit-border-radius:190px; 
+    border-radius:190px; 
+    float: right;
+}

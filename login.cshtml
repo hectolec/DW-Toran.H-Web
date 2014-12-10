@@ -1,0 +1,64 @@
+﻿@{
+    var user="";
+    var pass="";
+
+    Validation.RequireField("user","El campo Usuario no puede estar en blanco");
+    Validation.RequireField("pass","El campo Contraseña no puede estar en blanco");
+
+    if(IsPost){
+        user= Request["user"];    
+        pass = Request["pass"];
+        
+        if(Validation.IsValid()){
+            if(WebSecurity.Login(user,pass,true)){
+                if(Request.QueryString["sender"]!=null){
+                    Response.Redirect("~/default");
+                    //Response.Redirect(Request.QueryString["sender"]);
+                } else {
+                    Response.Redirect("~/default");
+                }
+            } else{
+                Validation.AddFormError("No se ha podido iniciar sesion");
+            }
+
+           
+        }
+    }   
+}
+
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Log-in</title>
+        <link rel='stylesheet' href='http://codepen.io/assets/libs/fullpage/jquery-ui.css'>
+        <link rel="stylesheet" href="css/estilsForms.css" media="screen" type="text/css" />
+    </head>
+    <body>
+        <div class="login-card">
+        <h1>Identificació d'usuari</h1><br>
+        <form action="login?@Request.QueryString" method="post">
+
+            <div>
+                @Html.Label("Nom d'usuari:","user")<br>
+                @Html.TextBox("user",user)
+                @Html.ValidationMessage("user")
+            </div>
+            <div>
+                @Html.Label("Contrasenya:","pass")<br>
+                @Html.Password("pass",pass)
+                @Html.ValidationMessage("pass")
+            </div>
+        
+            <input type="submit" name="login" class="login login-submit" value="Validar">
+        </form>
+
+        <div class="login-help">
+            <a href="register">Registrar</a>
+        </div>
+    </div>
+        <script src='http://codepen.io/assets/libs/fullpage/jquery_and_jqueryui.js'></script>
+    </body>
+</html>

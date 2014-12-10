@@ -1,0 +1,67 @@
+﻿@{
+    var user="";
+    var pass1="";
+    var pass2="";
+
+    Validation.RequireField("user","El campo Usuario no puede estar en blanco");
+    Validation.RequireField("pass1","El campo Contraseña no puedes estar en blanco");
+    Validation.Add("pass1",Validator.EqualsTo("pass2","Las contraseñas no coinciden"));
+
+    if(IsPost){
+        user= Request["user"];    
+        pass1 = Request["pass1"];
+        pass2 = Request["pass2"];
+
+        if(Validation.IsValid()){
+            if(WebSecurity.UserExists(user)){
+                ModelState.AddError("username", "Ya existe un usuario con ese nombre");
+            }
+
+            if(ModelState.IsValid){
+                WebSecurity.Logout();
+                WebSecurity.CreateUserAndAccount(user,pass1,null,false);
+                WebSecurity.Login(user,pass1);
+                Response.Redirect("default");
+            }
+        }
+    }  
+}
+
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Register</title>
+        <link rel='stylesheet' href='http://codepen.io/assets/libs/fullpage/jquery-ui.css'>
+        <link rel="stylesheet" href="css/estilsForms.css" media="screen" type="text/css" />
+    </head>
+    <body>
+        <div class="login-card">
+        <h1>Nou Usuari</h1><br>
+        <form method="post">
+
+            <div>
+                @Html.Label("Nom d'usuari:","user")<br>
+                @Html.TextBox("user",user)
+                @Html.ValidationMessage("user")
+            </div>
+            <div>
+                @Html.Label("Contrasenya:","pass1")<br>
+                @Html.Password("pass1",pass1)
+                @Html.ValidationMessage("pass1")
+            </div>
+            <div>
+                @Html.Label("Contrasenya 2:","pass2")<br>
+                @Html.Password("pass2",pass2)
+                @Html.ValidationMessage("pass2")
+            </div>
+        
+            <input type="submit" name="registr" class="login login-submit" value="Registrar">
+        </form>
+
+    </div>
+        <script src='http://codepen.io/assets/libs/fullpage/jquery_and_jqueryui.js'></script>
+    </body>
+</html>
